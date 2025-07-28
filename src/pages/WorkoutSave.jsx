@@ -77,12 +77,15 @@ export default function WorkoutSave() {
       <button
         className="w-full bg-green-500 text-white py-2 rounded"
         onClick={() =>
-          setSets(...sets, {
-            exerciseName: "",
-            setNumber: 1,
-            reps: 0,
-            weight: 0,
-          })
+          setSets([
+            ...sets,
+            {
+              exerciseName: "",
+              setNumber: 1,
+              reps: 0,
+              weight: 0,
+            },
+          ])
         }
       >
         + 운동 세트 추가
