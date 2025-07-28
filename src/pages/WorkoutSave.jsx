@@ -5,7 +5,7 @@ export default function WorkoutSave() {
   const [workoutDate, setWorkoutDate] = useState("");
   const [memo, setMemo] = useState("");
   const [sets, setSets] = useState([
-    { exerciseName: "", setNumber: 1, reps: 0, weight: 0 },
+    { exerciseName: "", targetMuscle: "", setNumber: 1, reps: 0, weight: 0 },
   ]);
 
   const handleSubmit = async () => {
@@ -50,6 +50,13 @@ export default function WorkoutSave() {
           />
 
           <input
+            className="w-full border p-1"
+            placeholder="타겟 부위"
+            value={set.targetMuscle}
+            onChange={(e) => updateSet(index, "targetMuscle", e.target.value)}
+          />
+
+          <input
             type="number"
             className="w-full border p-1"
             placeholder="세트 수"
@@ -81,6 +88,7 @@ export default function WorkoutSave() {
             ...sets,
             {
               exerciseName: "",
+              targetMuscle: "",
               setNumber: 1,
               reps: 0,
               weight: 0,
