@@ -1,8 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import WorkoutList from "./pages/WorkoutList";
+// import WorkoutList from "./pages/WorkoutList";
 import WorkoutSave from "./pages/WorkoutSave";
+import CalendarPage from "./pages/CalendarPage";
 
 // App.js
 function App() {
@@ -11,8 +12,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/log/select/all" element={<WorkoutList />} />
-        <Route path="/log/save" element={<WorkoutSave />} />
+        <Route path="/log/select/all" element={<CalendarPage />} />
+        <Route path="/log/save" element={<WorkoutSave />} /> 
       </Routes>
     </BrowserRouter>
   );
