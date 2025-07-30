@@ -9,7 +9,6 @@ export default function WorkoutList() {
       .get("/log/select/all")
       .then((res) => {
         setWorkouts(res.data);
-        console.log(res.data);
       })
       .catch((err) => console.error("불러오기 실패", err));
   }, []);
