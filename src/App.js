@@ -6,6 +6,8 @@ import WorkoutSave from "./pages/WorkoutSave";
 import CalendarPage from "./pages/CalendarPage";
 import BoardSelect from "./pages/BoardSelect";
 import BoardDetail from "./pages/BoardDetail";
+import BoardSave from "./pages/BoardSave";
+import ChatBot from "./pages/ChatBot";
 
 // App.js
 function App() {
@@ -18,6 +20,8 @@ function App() {
         <Route path="/log/save" element={<WorkoutSave />} />
         <Route path="/board/select/all" element={<BoardSelect />} />
         <Route path="/board/select" element={<BoardDetail />} />
+        <Route path="/board/save" element={<BoardSave />} />
+        <Route path="/chat-bot" element={<ChatBot />} />
       </Routes>
     </BrowserRouter>
   );

@@ -7,8 +7,6 @@ export default function BoardDetail() {
   const [searchParams] = useSearchParams();
   const id = searchParams.get("id");
 
-  console.log(id);
-
   const [board, setBoard] = useState(null);
 
   useEffect(() => {
