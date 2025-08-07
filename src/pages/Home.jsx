@@ -1,13 +1,24 @@
 import Layout from "./Layout";
+import { useEffect, useState } from "react";
+import axios from "../utils/axiosInstance";
 
 export default function Home() {
+  const [log, setLog] = useState(0);
+
+  useEffect(() => {
+    axios
+      .get("/log/count")
+      .then((res) => setLog(res.data))
+      .catch((err) => console.error("불러오기 실패", err));
+  }, []);
+
   return (
     <Layout>
-      <div className="text-center mt-20">
-        <h1 className="text-3xl font-bold">헬스 챗봇에 오신 걸 환영합니다!</h1>
-        <a href="/login" className="text-blue-500 underline mt-4 block">
-          로그인하러 가기
-        </a>
+      <div className="bg-white shadow-md rounded-2xl p-6 w-64">
+        <h2 className="text-xl font-bold text-gray-800 mb-2">
+          이번 달 운동 횟수
+        </h2>
+        <p className="text-3xl font-bold text-blue-500">{log}회</p>
       </div>
     </Layout>
   );
