@@ -1,0 +1,27 @@
+.react-calendar {
+  border: none;
+  border-radius: 15px;
+  padding: 10px;
+}
+
+.react-calendar__tile {
+  padding: 10px;
+  border-radius: 50%;
+}
+
+/* 운동 날짜 색상 커스텀 */
+.workout-day {
+  background-color: #ffb347; /* 주황 */
+  color: white;
+  font-weight: bold;
+}
+
+/* hover 효과 */
+.react-calendar__tile:hover {
+  background-color: #ffda77;
+}
+
+/* 오늘 날짜 강조 */
+.react-calendar__tile--now {
+  border: 2px solid #ff7f50;
+}
