@@ -17,9 +17,8 @@ export default function Header() {
       localStorage.removeItem("jwt");
       setIsLoggedIn(false);
       alert("로그아웃 되었습니다.");
+      navigate("/login");
     } else {
-      // 로그인 (예: 로그인 페이지로 이동 또는 테스트용 세팅)
-      localStorage.setItem("jwt", "sampleToken"); // 임시로 넣어보기
       setIsLoggedIn(true);
       alert("로그인 되었습니다.");
     }
@@ -30,12 +29,18 @@ export default function Header() {
   };
 
   const handleLog = () => {
-    navigate("/board/select/all");
+    navigate("/log/select/all");
+  };
+
+  const handleHome = () => {
+    navigate("/");
   };
 
   return (
     <header className="bg-gray-900 text-white px-6 py-4 flex justify-between items-center shadow-md">
-      <h1 className="text-2xl font-bold">FitLog</h1>
+      <h1 className="text-2xl font-bold cursor-pointer" onClick={handleHome}>
+        FitLog
+      </h1>
       <nav className="space-x-6">
         <button onClick={handleLog} className="hover:underline">
           운동기록

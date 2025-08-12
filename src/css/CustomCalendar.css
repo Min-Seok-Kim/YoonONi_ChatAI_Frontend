@@ -1,27 +1,57 @@
+/* 전체 달력 */
 .react-calendar {
   border: none;
-  border-radius: 15px;
-  padding: 10px;
+  font-family: "Noto Sans KR", sans-serif;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color),
+    0 2px 4px -2px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  border-radius: 1rem /* 16px */;
+  padding: 1.5rem /* 24px */;
+  width: 20rem /* 256px */;
 }
 
+/* 날짜 셀 */
 .react-calendar__tile {
-  padding: 10px;
+  padding: 0.75rem;
+  font-size: 1rem;
+}
+
+/* 오늘 날짜 */
+.react-calendar__tile--now {
+  background: #facc15;
   border-radius: 50%;
 }
 
-/* 운동 날짜 색상 커스텀 */
-.workout-day {
-  background-color: #ffb347; /* 주황 */
+/* 선택된 날짜 */
+.react-calendar__tile--active {
+  background: #3b82f6;
   color: white;
+  border-radius: 50%;
+}
+
+/* 요일 헤더 */
+.react-calendar__month-view__weekdays {
   font-weight: bold;
 }
 
-/* hover 효과 */
-.react-calendar__tile:hover {
-  background-color: #ffda77;
+.react-calendar__navigation__prev2-button,
+.react-calendar__navigation__next2-button {
+  display: none;
 }
 
-/* 오늘 날짜 강조 */
-.react-calendar__tile--now {
-  border: 2px solid #ff7f50;
+.react-calendar__navigation__label__labelText {
+  white-space: pre-line; /* 줄바꿈 문자(\n)를 실제 줄바꿈으로 처리 */
+  text-align: center; /* 가운데 정렬 */
+}
+
+.react-calendar__month-view__weekdays__weekday {
+  text-transform: none;
+}
+
+.react-calendar__month-view__weekdays__weekday abbr {
+  text-decoration: none;
 }
