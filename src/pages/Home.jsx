@@ -50,11 +50,11 @@ export default function Home() {
           {/* 이번 주 목표 달성률 */}
           <div className="bg-white shadow-md rounded-2xl p-6 flex items-center h-40">
             <div className="flex-1 flex flex-col items-center">
-              <h2 className="text-xl font-bold mb-4">이번 주 목표 달성률</h2>
+              <h2 className="text-xl font-bold">이번 주 목표 달성률</h2>
               <div className="w-full">
                 <div className="bg-gray-200 rounded-full h-4">
                   <div
-                    className="bg-blue-500 h-4 rounded-full"
+                    className="mt-3 bg-blue-500 h-4 rounded-full"
                     style={{ width: "70%" }}
                   ></div>
                 </div>
@@ -67,8 +67,25 @@ export default function Home() {
             <div className="w-px h-24 bg-gray-300 mx-6"></div>
 
             <div className="flex-1 flex flex-col items-center">
-              <h2 className="text-xl font-bold mb-4">이번 주 목표 설정하기</h2>
-              <button>+</button>
+              <div className="text-xl font-bold mb-4">
+                이번 주 목표 설정하기
+              </div>
+              <button className="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center shadow-md hover:bg-blue-600">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width="20"
+                  height="20"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                </svg>
+              </button>
             </div>
           </div>
         </div>
