@@ -65,7 +65,7 @@ export default function CalendarPage() {
         {/* 모달 */}
         {isModalOpen && selectedEvent && (
           <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
-            <div className="bg-white p-6 rounded-2xl shadow-lg w-96 relative">
+            <div className="bg-white p-6 rounded-2xl shadow-2xl w-96 relative">
               <button
                 className="absolute top-2 right-3 text-gray-500 hover:text-black text-lg"
                 onClick={closeModal}
