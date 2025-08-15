@@ -11,6 +11,7 @@ export default function Home() {
   const [value, setValue] = useState(new Date());
   const [goal, setGoal] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [goalRate, setGoalRate] = useState("");
 
   useEffect(() => {
     axios
@@ -24,17 +25,22 @@ export default function Home() {
       .get("/log/count/year")
       .then((res) => setYearLog(res.data))
       .catch((err) => console.error("불러오기 실패", err));
-  });
+  }, []);
 
-  const saveGoal = () => {
+  useEffect(() => {
     axios
-      .post(
-        "/goal",
-        { weeklyGoal: Number(goal) }.then(() => {
-          alert("목표가 저장되었습니다!");
-          closeModal();
-        })
-      )
+      .get("/goal/rate")
+      .then((res) => setGoalRate(res.data))
+      .catch((err) => console.error("불러오기 실패", err));
+  }, []);
+
+  const saveGoal = async () => {
+    await axios
+      .post("/goal", { weeklyGoal: Number(goal) })
+      .then(() => {
+        alert("목표가 저장되었습니다!");
+        closeModal();
+      })
       .catch((err) => console.error("목표 저장 실패", err));
   };
 
@@ -79,7 +85,7 @@ export default function Home() {
                   ></div>
                 </div>
                 <p className="mt-2 text-sm text-gray-600 text-center">
-                  70% 달성
+                  {goalRate}% 달성
                 </p>
               </div>
             </div>
