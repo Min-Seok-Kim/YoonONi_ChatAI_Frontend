@@ -7,32 +7,24 @@ import "../css/CustomCalendar.css";
 
 export default function Home() {
   const [monthLog, setMonthLog] = useState(0);
-  const [yearLog, setYearLog] = useState(0);
   const [value, setValue] = useState(new Date());
   const [goal, setGoal] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [goalRate, setGoalRate] = useState("");
+  const [goalRate, setGoalRate] = useState("0");
 
   useEffect(() => {
     axios
-      .get("/log/count")
+      .get("/log/count/month")
       .then((res) => setMonthLog(res.data))
       .catch((err) => console.error("불러오기 실패", err));
   }, []);
 
   useEffect(() => {
     axios
-      .get("/log/count/year")
-      .then((res) => setYearLog(res.data))
-      .catch((err) => console.error("불러오기 실패", err));
-  }, []);
-
-  useEffect(() => {
-    axios
-      .get("/goal/rate")
+      .get("/log/count/week")
       .then((res) => setGoalRate(res.data))
       .catch((err) => console.error("불러오기 실패", err));
-  }, []);
+  }, [goalRate]);
 
   const saveGoal = async () => {
     await axios
@@ -65,14 +57,6 @@ export default function Home() {
             <p className="text-3xl font-bold text-blue-500">{monthLog}</p>
           </div>
 
-          {/* 이번 년도 운동 횟수 */}
-          <div className="bg-white shadow-md rounded-2xl p-6 h-32">
-            <h2 className="text-xl font-bold text-gray-800 mb-2">
-              이번 년도 운동 횟수
-            </h2>
-            <p className="text-3xl font-bold text-blue-500">{yearLog}</p>
-          </div>
-
           {/* 이번 주 목표 달성률 */}
           <div className="bg-white shadow-md rounded-2xl p-6 flex items-center h-40">
             <div className="flex-1 flex flex-col items-center">
@@ -81,7 +65,7 @@ export default function Home() {
                 <div className="bg-gray-200 rounded-full h-4">
                   <div
                     className="mt-3 bg-blue-500 h-4 rounded-full"
-                    style={{ width: "70%" }}
+                    style={{ width: `${goalRate}%` }}
                   ></div>
                 </div>
                 <p className="mt-2 text-sm text-gray-600 text-center">
