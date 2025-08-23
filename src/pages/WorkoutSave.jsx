@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "../utils/axiosInstance";
 import Layout from "./Layout";
 
@@ -23,10 +23,18 @@ export default function WorkoutSave() {
     }
   };
 
+  useEffect(() => {
+    const now = new Date();
+    const yyyy = now.getFullYear();
+    const mm = String(now.getMonth() + 1).padStart(2, "0");
+    const dd = String(now.getDate()).padStart(2, "0");
+    setWorkoutDate(`${yyyy}-${mm}-${dd}`);
+  }, []);
+
   return (
     <Layout>
       <div className="max-w-md mx-auto mt-10 space-y-4">
-        <h2 className="text-xl font-bold text-center">운동 일지 등록</h2>
+        <h2 className="text-xl font-bold text-center">운동 일지 작성</h2>
 
         <input
           type="date"

@@ -12,6 +12,45 @@ export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [goalRate, setGoalRate] = useState("0");
 
+  // 랜덤 이미지 상태
+  const images = [
+    "/workout1.jpg",
+    "/workout2.jpg",
+    "/workout3.jpg",
+    "/workout4.jpg",
+    "/workout5.jpg",
+    "/workout6.jpg",
+  ];
+  const [selectedImage, setSelectedImage] = useState(images[0]);
+
+  const motivation = [
+    '"클럽은 헬스클럽이다".',
+    '"꾸준함이 완벽함을 만든다."',
+    '"작은 습관이 큰 변화를 만든다."',
+    '"우리가 늙어서 운동을 그만두는 것이 아니라, 우리가 운동을 그만두기 때문에 늙는 것이다."',
+    '"사람이 자신의 몸이 가질 수 있는 아름다움과 강함을 알지 못하고 늙어 버리는 것은 안타까운 일이다."',
+    '"독서는 마음을 위한 것이고, 운동은 몸을 위한 것이다."',
+    '"우리가 반복적으로 하는 것이 우리 자신을 만든다. 그러므로 우수하다는 것은 행동이 아닌 습관이다."',
+    '"운동하라. 잘 먹어라. 인내하라. 당신의 몸은 보답할 것이다."',
+    '"운동은 사람의 몸과 감정과 정신력의 창조적 변화를 위한 약이다."',
+    '"오늘 당신이 느끼는 고통은 내일 당신이 느낄 힘이 될 것이다."',
+    '"변명을 늘어 놓는 것은 한 시간에 0칼로리 밖에 소모하지 않는다."',
+    '"당신의 몸은 해 낼 수 있다. 당신의 마음만 설득하면 된다."',
+    '"정확하게 반복하고 허세 없이 운동해라."',
+    '"나를 배부르게 하는 것들이 나를 파괴한다."',
+    '"운동이 끝나고 먹는 거까지가 운동이다."',
+  ];
+
+  const [selectMotivation, setSelectMotivation] = useState(motivation[0]);
+
+  useEffect(() => {
+    // 페이지 로드 시 랜덤 이미지 선택
+    const randomIndex = Math.floor(Math.random() * images.length);
+    setSelectedImage(images[randomIndex]);
+    const randomMoti = Math.floor(Math.random() * motivation.length);
+    setSelectMotivation(motivation[randomMoti]);
+  }, []);
+
   useEffect(() => {
     axios
       .get("/log/count/month")
@@ -36,108 +75,57 @@ export default function Home() {
       .catch((err) => console.error("목표 저장 실패", err));
   };
 
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   return (
     <Layout>
-      <div className="flex justify-center items-start gap-6 max-w-6xl mx-auto">
-        {/* 왼쪽 카드들 세로 정렬 */}
+      {/* Hero Section */}
+      <section className="text-center py-12 bg-gray-50">
+        <p className="italic mb-6">{selectMotivation}</p>
+        <img
+          src={selectedImage}
+          alt="Motivation"
+          className="w-64 rounded-lg shadow-md mx-auto"
+        />
+      </section>
+
+      {/* Main Content Section */}
+      <section className="flex justify-center items-start gap-8 max-w-6xl mx-auto py-12">
+        {/* 왼쪽 카드 */}
         <div className="flex flex-col gap-6 w-80">
           {/* 이번 달 운동 횟수 */}
-          <div className="bg-white shadow-md rounded-2xl p-6 h-32">
-            <h2 className="text-xl font-bold text-gray-800 mb-2">
-              이번 달 운동 횟수
-            </h2>
+          <div className="bg-white shadow-md rounded-2xl p-6 h-32 flex flex-col justify-center items-center">
+            <h2 className="text-xl font-bold mb-2">이번 달 운동 횟수</h2>
             <p className="text-3xl font-bold text-blue-500">{monthLog}</p>
           </div>
 
           {/* 이번 주 목표 달성률 */}
-          <div className="bg-white shadow-md rounded-2xl p-6 flex items-center h-40">
-            <div className="flex-1 flex flex-col items-center">
-              <h2 className="text-xl font-bold">이번 주 목표 달성률</h2>
-              <div className="w-full">
-                <div className="bg-gray-200 rounded-full h-4">
-                  <div
-                    className="mt-3 bg-blue-500 h-4 rounded-full"
-                    style={{ width: `${goalRate}%` }}
-                  ></div>
-                </div>
-                <p className="mt-2 text-sm text-gray-600 text-center">
-                  {goalRate}% 달성
-                </p>
-              </div>
+          <div className="bg-white shadow-md rounded-2xl p-6 h-40 flex flex-col items-center justify-center">
+            <h2 className="text-xl font-bold mb-2">이번 주 목표 달성률</h2>
+            <div className="w-full bg-gray-200 rounded-full h-4">
+              <div
+                className="bg-blue-500 h-4 rounded-full"
+                style={{ width: `${goalRate}%` }}
+              ></div>
             </div>
-
-            <div className="w-px h-24 bg-gray-300 mx-6"></div>
-
-            <div className="flex-1 flex flex-col items-center">
-              <div className="text-xl font-bold mb-4">
-                이번 주 목표 설정하기
-              </div>
-              <button
-                className="w-10 h-10 rounded-full bg-blue-500 text-white flex items-center justify-center shadow-md hover:bg-blue-600"
-                onClick={openModal}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  width="20"
-                  height="20"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <line x1="12" y1="5" x2="12" y2="19" />
-                  <line x1="5" y1="12" x2="19" y2="12" />
-                </svg>
-              </button>
-            </div>
+            <p className="mt-2 text-sm text-gray-600">{goalRate}% 달성</p>
+            <button
+              className="mt-4 px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600"
+              onClick={openModal}
+            >
+              목표 설정
+            </button>
           </div>
         </div>
 
-        {isModalOpen && (
-          <div className="fixed bg-black inset-0 bg-opacity-40 flex justify-center items-center z-50">
-            <div className="bg-white p-6 rounded-2xl shadow-lg w-96 h-56 relative">
-              <h2 className="text-xl font-bold mb-4">이번 주 목표 설정</h2>
-              <label className="block mb-2 font-medium text-gray-700">
-                이번 주 목표 운동 횟수
-              </label>
-              <input
-                type="number"
-                min="1"
-                className="border rounded-lg p-2 w-full mb-4"
-                value={goal}
-                onChange={(e) => setGoal(e.target.value)}
-              />
-              <button
-                className="px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600"
-                onClick={saveGoal}
-              >
-                저장
-              </button>
-              <button
-                className="absolute top-2 right-5 text-gray-500 hover:text-black text-lg"
-                onClick={closeModal}
-              >
-                ✖
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* 오른쪽: 캘린더 */}
+        {/* 오른쪽 캘린더 */}
         <div>
           <Calendar
-            formatDay={(locale, date) => date.getDate()} // 날짜: 숫자만
-            formatMonth={(locale, date) => date.getMonth() + 1} // 월: 숫자만
+            value={value}
+            onChange={setValue}
+            formatDay={(locale, date) => date.getDate()}
+            formatMonth={(locale, date) => date.getMonth() + 1}
             formatShortWeekday={(locale, date) =>
               ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][date.getDay()]
             }
@@ -159,7 +147,38 @@ export default function Home() {
             }}
           />
         </div>
-      </div>
+      </section>
+
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
+          <div className="bg-white p-6 rounded-2xl shadow-lg w-96 h-56 relative">
+            <h2 className="text-xl font-bold mb-4">이번 주 목표 설정</h2>
+            <label className="block mb-2 font-medium text-gray-700">
+              이번 주 목표 운동 횟수
+            </label>
+            <input
+              type="number"
+              min="1"
+              className="border rounded-lg p-2 w-full mb-4"
+              value={goal}
+              onChange={(e) => setGoal(e.target.value)}
+            />
+            <button
+              className="px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 mr-2"
+              onClick={saveGoal}
+            >
+              저장
+            </button>
+            <button
+              className="absolute top-2 right-5 text-gray-500 hover:text-black text-lg"
+              onClick={closeModal}
+            >
+              ✖
+            </button>
+          </div>
+        </div>
+      )}
     </Layout>
   );
 }
