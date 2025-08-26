@@ -36,6 +36,14 @@ export default function Header() {
     navigate("/");
   };
 
+  const handleBoard = () => {
+    navigate("/board/select/all");
+  };
+
+  const handleMyPage = () => {
+    navigate("/mypage");
+  };
+
   return (
     <header className="bg-gray-900 text-white px-6 py-4 flex justify-between items-center shadow-md">
       <h1 className="text-2xl font-bold cursor-pointer" onClick={handleHome}>
@@ -47,6 +55,12 @@ export default function Header() {
         </button>
         <button onClick={handleChatBot} className="hover:underline">
           AI 챗봇
+        </button>
+        <button onClick={handleBoard} className="hover:underline">
+          커뮤니티
+        </button>
+        <button onClick={handleMyPage} className="hover:underline">
+          마이페이지
         </button>
         <button onClick={handleAuthClick} className="hover:underline">
           {isLoggedIn ? "로그아웃" : "로그인"}
