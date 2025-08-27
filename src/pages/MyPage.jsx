@@ -25,19 +25,23 @@ export default function MyPage() {
             <h2 className="text-sm font-bold">아이디</h2>
           </div>
 
-          <div className="bg-white p-4 flex flex-col">
-            <h2 className="text-sm font-bold mb-2">비밀번호</h2>
-            <div className="flex flex-col ml-10 gap-2">
-              <input
-                placeholder="새 비밀번호"
-                className="p-1 border rounded-md border-gray-300 w-64"
-              />
-              <input
-                placeholder="새 비밀번호 확인"
-                className="p-1 border rounded-md border-gray-300 w-64"
-              />
-            </div>
-          </div>
+          <div className="bg-white p-4 flex items-center">
+  {/* 왼쪽: 비밀번호 */}
+  <h2 className="text-sm font-bold">비밀번호</h2>
+
+  {/* 오른쪽: input 묶음 */}
+  <div className="flex flex-col gap-2 ml-6">
+    <input
+      placeholder="새 비밀번호"
+      className="p-1 border rounded-md border-gray-300 w-64 mb-2"
+    />
+    <input
+      placeholder="새 비밀번호 확인"
+      className="p-1 border rounded-md border-gray-300 w-64"
+    />
+  </div>
+</div>
+
         </div>
       </div>
     </Layout>
