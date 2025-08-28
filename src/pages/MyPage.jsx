@@ -4,17 +4,23 @@ import Layout from "./Layout";
 
 export default function MyPage() {
   const [user, setUser] = useState({
-    nickname: "헬창민석",
-    profileImage: "/images/profile.png",
-    goal: "주 3회 운동하기",
-    achievement: 67,
-    monthlyWorkout: 12,
+    id: "",
+    email: "",
+    birth: "",
+    height: null,
+    weight: null,
   });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // 나중에 API 붙일 자리
-    // axios.get("/api/user/me").then(res => setUser(res.data));
+    axios
+      .get("/mypage/select")
+      .then((res) => setUser(res.data))
+      .catch((err) => console.error("불러오기 실패", err))
+      .finally(() => setLoading(false));
   }, []);
+
+  if (loading) return <div>로딩 중...</div>;
 
   return (
     <Layout>
@@ -23,7 +29,7 @@ export default function MyPage() {
         <div className="w-full max-w-2xl space-y-1">
           <div className="bg-white p-4 flex items-center">
             <h2 className="text-sm font-bold">아이디</h2>
-            <div className="ml-32">rladbsdnjs87</div>
+            <div className="ml-32">{user.userId}</div>
           </div>
 
           <div className="bg-white p-4 flex items-center">
@@ -42,22 +48,22 @@ export default function MyPage() {
 
           <div className="bg-white p-4 flex items-center">
             <h2 className="text-sm font-bold">이메일(e-mail)</h2>
-            <div className="ml-20">rladbsdnjs87@naver.com</div>
+            <div className="ml-20">{user.email}</div>
           </div>
 
           <div className="bg-white p-4 flex items-center">
             <h2 className="text-sm font-bold">생년월일(birth)</h2>
-            <div className="ml-20">1998-10-07</div>
+            <div className="ml-20">{user.birthDate}</div>
           </div>
 
           <div className="bg-white p-4 flex items-center">
             <h2 className="text-sm font-bold">키(height)</h2>
-            <div className="ml-28">181.1</div>
+            <div className="ml-28">{user.heightCm}</div>
           </div>
 
           <div className="bg-white p-4 flex items-center">
             <h2 className="text-sm font-bold">몸무게(weight)</h2>
-            <div className="ml-20">78.2</div>
+            <div className="ml-20">{user.weightKg}</div>
           </div>
 
           <div className="flex justify-between">
