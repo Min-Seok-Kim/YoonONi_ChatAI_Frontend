@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "../utils/axiosInstance";
 import Layout from "./Layout";
+import { useNavigate } from "react-router-dom";
 
 export default function WorkoutSave() {
   const [workoutDate, setWorkoutDate] = useState("");
@@ -8,6 +9,7 @@ export default function WorkoutSave() {
   const [sets, setSets] = useState([
     { exerciseName: "", targetMuscle: "", setNumber: 1, reps: 0, weight: 0 },
   ]);
+  const navigate = useNavigate();
 
   const handleSubmit = async () => {
     try {
@@ -17,6 +19,7 @@ export default function WorkoutSave() {
         sets,
       });
       alert("등록 완료");
+      navigate("/log/select/all");
     } catch (error) {
       console.error(error);
       alert("등록 실패");
