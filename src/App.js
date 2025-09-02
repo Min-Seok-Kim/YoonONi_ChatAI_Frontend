@@ -9,6 +9,7 @@ import BoardDetail from "./pages/BoardDetail";
 import BoardSave from "./pages/BoardSave";
 import ChatBot from "./pages/ChatBot";
 import MyPage from "./pages/MyPage";
+import BoardEdit from "./pages/BoardEdit";
 
 // App.js
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path="/board/select/all" element={<BoardSelect />} />
         <Route path="/board/select" element={<BoardDetail />} />
         <Route path="/board/save" element={<BoardSave />} />
+        <Route path="/board/edit" element={<BoardEdit />} />
         <Route path="/chat-bot" element={<ChatBot />} />
         <Route path="/mypage" element={<MyPage />} />
       </Routes>

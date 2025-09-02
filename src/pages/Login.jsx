@@ -9,6 +9,16 @@ export default function Login() {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [signUpData, setSignUpData] = useState({
+    userId: "",
+    password: "",
+    email: "",
+    gender: "",
+    birthDate: "",
+    heightCm: "",
+    weightKg: "",
+  });
+
   const handleLogin = async () => {
     try {
       const res = await axios.post("/login", { userId, password });
@@ -21,8 +31,21 @@ export default function Login() {
 
   const handleSignUp = async () => {
     try {
-      axios.post("/signup");
-    } catch (error) {}
+      await axios.post("/signup", signUpData);
+      alert("회원가입이 완료되었습니다.");
+      setIsModalOpen(false);
+    } catch (error) {
+      alert("회원가입 실패: " + (error.response?.data?.message || ""));
+    }
+  };
+
+  const handleSignUpChange = (e) => {
+    const { name, value } = e.target;
+    setSignUpData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -38,6 +61,7 @@ export default function Login() {
           placeholder="아이디"
           value={userId}
           onChange={(e) => setUserId(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleLogin()}
         />
 
         <input
@@ -46,6 +70,7 @@ export default function Login() {
           placeholder="비밀번호"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleLogin()}
         />
 
         <button
@@ -67,18 +92,104 @@ export default function Login() {
 
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-            <h2 className="text-lg font-bold mb-4">회원 탈퇴</h2>
-            <p className="mb-4">정말 탈퇴하시겠습니까? 😢</p>
-            <div className="flex justify-end gap-2">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-96 h-max relative">
+            <button
+              className="absolute top-2 right-3 text-gray-500 hover:text-black text-lg"
+              onClick={closeModal}
+            >
+              ✖
+            </button>
+            <h2 className="text-lg font-bold mb-4 flex justify-center">
+              회원 가입
+            </h2>
+            <h2 className="ml-2">아이디</h2>
+            <input
+              className="border p-2 m-2 w-full rounded"
+              name="userId"
+              value={signUpData.userId}
+              onChange={handleSignUpChange}
+            />
+
+            <h2 className="ml-2 mt-2">비밀번호</h2>
+            <input
+              type="password"
+              className="border p-2 m-2 w-full rounded"
+              name="password"
+              value={signUpData.password}
+              onChange={handleSignUpChange}
+            />
+
+            <h2 className="ml-2 mt-2">이메일</h2>
+            <input
+              className="border p-2 m-2 w-full rounded"
+              name="email"
+              value={signUpData.email}
+              onChange={handleSignUpChange}
+            />
+
+            <h2 className="ml-2 mt-2">성별</h2>
+            <div className="flex gap-4 ml-2">
+              <label>
+                <input
+                  type="radio"
+                  className="mr-1"
+                  name="gender"
+                  value="M"
+                  checked={signUpData.gender === "M"}
+                  onChange={handleSignUpChange}
+                />
+                남성
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  className="mr-1"
+                  value="F"
+                  name="gender"
+                  checked={signUpData.gender === "F"}
+                  onChange={handleSignUpChange}
+                />
+                여성
+              </label>
+            </div>
+
+            <h2 className="ml-2 mt-2">생년월일</h2>
+            <input
+              type="date"
+              className="border p-2 m-2 w-full rounded"
+              name="birthDate"
+              value={signUpData.birthDate}
+              onChange={handleSignUpChange}
+            />
+
+            <div className="flex gap-4">
+              <div className="flex-1">
+                <h2 className="ml-2 mt-2">키</h2>
+                <input
+                  className="border p-2 m-2 rounded w-full"
+                  name="heightCm"
+                  value={signUpData.heightCm}
+                  onChange={handleSignUpChange}
+                />
+              </div>
+
+              <div className="flex-1">
+                <h2 className="ml-2 mt-2">몸무게</h2>
+                <input
+                  className="border p-2 m-2 rounded w-full"
+                  name="weightKg"
+                  value={signUpData.weightKg}
+                  onChange={handleSignUpChange}
+                />
+              </div>
+            </div>
+
+            <div className="flex justify-center">
               <button
-                className="px-4 py-2 bg-gray-300 rounded"
-                onClick={() => setIsModalOpen(false)}
+                className="border rounded bg-blue-500 text-white w-full p-2 m-2"
+                onClick={handleSignUp}
               >
-                취소
-              </button>
-              <button className="px-4 py-2 bg-red-500 text-white rounded">
-                탈퇴
+                가입 완료
               </button>
             </div>
           </div>
