@@ -39,6 +39,16 @@ export default function BoardDetail() {
   const payload = parseJwt(token);
   const loginUserId = payload?.sub;
 
+  const handleBoardDelete = async () => {
+    try {
+      await axios.delete(`/board/${id}`);
+      alert("삭제가 완료되었습니다.");
+      navigate("/board/select/all");
+    } catch (error) {
+      console.error("삭제 실패", error);
+    }
+  };
+
   return (
     <Layout>
       <div className="max-w-2xl mx-auto px-4 py-8">
@@ -63,7 +73,16 @@ export default function BoardDetail() {
               수정
             </button>
 
-            <button className="border rounded bg-blue-500 text-white px-4 py-2 hover:bg-blue-600 mb-2">
+            <button
+              onClick={() => {
+                if (board.userId == loginUserId) {
+                  handleBoardDelete();
+                } else {
+                  alert("본인 게시글만 삭제할 수 있습니다.");
+                }
+              }}
+              className="border rounded bg-blue-500 text-white px-4 py-2 hover:bg-blue-600 mb-2"
+            >
               삭제
             </button>
           </div>
