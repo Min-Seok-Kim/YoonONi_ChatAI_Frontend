@@ -50,9 +50,6 @@ export default function Header() {
         FitLog
       </h1>
       <nav className="space-x-6">
-        <button onClick={handleLog} className="hover:underline">
-          운동기록
-        </button>
         <button onClick={handleChatBot} className="hover:underline">
           AI 챗봇
         </button>

@@ -91,18 +91,13 @@ export default function Home() {
       .then(() => {
         alert("목표가 저장되었습니다!");
         closeModal();
+        window.location.reload();
       })
       .catch((err) => console.error("목표 저장 실패", err));
   };
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-
-  const saveLog = async () => {
-    try {
-      await axios.post("");
-    } catch (error) {}
-  };
 
   const handleDateChange = (date) => {
     const offset = date.getTimezoneOffset() * 60000;
@@ -271,8 +266,15 @@ export default function Home() {
         <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
           <div className="bg-white p-6 rounded-2xl shadow-lg w-96 max-h-[90vh] overflow-y-auto relative">
             <h2 className="text-xl font-bold mb-4">
-              {value.toISOString().slice(0, 10)} 운동 일지 작성
+              운동 일지 작성 / {value.toISOString().slice(0, 10)}
             </h2>
+
+            <button
+              className="absolute top-2 right-5 text-gray-500 hover:text-black text-lg"
+              onClick={() => setIsLogModalOpen(false)}
+            >
+              ✖
+            </button>
 
             <textarea
               className="w-full border p-2 mb-2"
@@ -371,6 +373,7 @@ export default function Home() {
                       },
                     ]);
                     setIsLogModalOpen(false);
+                    window.location.reload();
                   } catch (err) {
                     console.error(err);
                     alert("등록 실패");
