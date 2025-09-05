@@ -16,8 +16,23 @@ export default function Home() {
   const [sets, setSets] = useState([
     { exerciseName: "", targetMuscle: "", setNumber: "", reps: "", weight: "" },
   ]);
+  const [isWorkoutModalOpen, setIsWorkoutModalOpen] = useState(false);
+  const [workouts, setWorkouts] = useState([]);
 
-  // 랜덤 이미지 상태
+  const [workoutDates, setWorkoutDates] = useState([""]);
+  const [selectedWorkout, setSelectedWorkout] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get("/log/select/all")
+      .then((res) => {
+        setWorkouts(res.data);
+        const dates = res.data.map((item) => item.workoutDate);
+        setWorkoutDates(dates);
+      })
+      .catch((err) => console.error("불러오기 실패", err));
+  }, []);
+
   const images = [
     "/workout1.jpg",
     "/workout2.jpg",
@@ -151,8 +166,8 @@ export default function Home() {
                     reps: "",
                     weight: "",
                   },
-                ]); // 초기화
-                setMemo(""); // 메모도 초기화
+                ]);
+                setMemo("");
                 setIsLogModalOpen(true);
               }}
               className="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
@@ -164,11 +179,33 @@ export default function Home() {
           <Calendar
             value={value}
             onChange={handleDateChange}
+            onClickDay={(date) => {
+              const offset = date.getTimezoneOffset() * 60000;
+              const localDate = new Date(date.getTime() - offset);
+              const dateStr = localDate.toISOString().split("T")[0];
+
+              const workout = workouts.find((w) => w.workoutDate === dateStr);
+              if (workout) {
+                setSelectedWorkout(workout);
+                setIsWorkoutModalOpen(true);
+              }
+            }}
             formatDay={(locale, date) => date.getDate()}
             formatMonth={(locale, date) => date.getMonth() + 1}
             formatShortWeekday={(locale, date) =>
               ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][date.getDay()]
             }
+            tileClassName={({ date, view }) => {
+              if (view === "month") {
+                const offset = date.getTimezoneOffset() * 60000;
+                const localDate = new Date(date.getTime() - offset);
+                const dateStr = localDate.toISOString().split("T")[0];
+                if (workoutDates.includes(dateStr)) {
+                  return "workout-day";
+                }
+              }
+              return "";
+            }}
             formatMonthYear={(locale, date) => {
               const year = date.getFullYear();
               const month = date.getMonth() + 1;
@@ -188,6 +225,47 @@ export default function Home() {
           />
         </div>
       </section>
+
+      {isWorkoutModalOpen && selectedWorkout && (
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
+          <div className="bg-white p-6 rounded-2xl shadow-2xl w-96 relative">
+            <button
+              className="absolute top-2 right-3 text-gray-500 hover:text-black text-lg"
+              onClick={() => {
+                setIsWorkoutModalOpen(false);
+                setSelectedWorkout(null);
+              }}
+            >
+              ✖
+            </button>
+            <h3 className="text-xl font-semibold mb-2">운동 상세</h3>
+            <p>
+              <strong>날짜:</strong> {selectedWorkout.workoutDate}
+            </p>
+            <p>
+              <strong>메모:</strong> {selectedWorkout.memo}
+            </p>
+            <div className="mt-4">
+              {selectedWorkout.sets.map((set, idx) => (
+                <div key={idx} className="mb-2 border-b pb-2">
+                  <p>
+                    <strong>운동명:</strong> {set.exerciseName}
+                  </p>
+                  <p>
+                    <strong>타겟 부위:</strong> {set.targetMuscle}
+                  </p>
+                  <p>
+                    <strong>무게:</strong> {set.weight}kg
+                  </p>
+                  <p>
+                    <strong>횟수:</strong> {set.reps}회
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       {isLogModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
