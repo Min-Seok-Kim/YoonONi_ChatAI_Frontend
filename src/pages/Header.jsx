@@ -47,7 +47,7 @@ export default function Header() {
   return (
     <header className="bg-gray-900 text-white px-6 py-4 flex justify-between items-center shadow-md">
       <h1 className="text-2xl font-bold cursor-pointer" onClick={handleHome}>
-        FitLogg
+        FitLog
       </h1>
       <nav className="space-x-6">
         <button onClick={handleChatBot} className="hover:underline">
