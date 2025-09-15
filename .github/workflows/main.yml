@@ -20,4 +20,4 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd ~/YoonONi_ChatAI_Frontend
-            ./deploy_front.sh
+            ./deploy.sh
